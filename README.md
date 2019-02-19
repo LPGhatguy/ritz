@@ -18,7 +18,7 @@ fn main() {
     let page_title = "Hello, world, from Snax!";
 
     let page = html! {
-        /* Snax supports regular multi-line Rust comments. */
+        /* Ritz supports regular multi-line Rust comments. */
         <html>
             <head>
                 /*
@@ -30,7 +30,7 @@ fn main() {
             </head>
             <body>
                 /*
-                    Snax supports embedding Rust expressions that return
+                    Ritz supports embedding Rust expressions that return
                     `impl IntoIterator<HtmlContent>`. String and &str work
                     great here!
                 */
@@ -49,7 +49,7 @@ fn main() {
 ```
 
 ### Composition via functions
-Snax is designed to work well when using functions to reuse pieces of HTML!
+Ritz is designed to work well when using functions to reuse pieces of HTML!
 
 ```rust
 use ritz::{html, Fragment, HtmlContent};
