@@ -22,3 +22,8 @@ ritz_impl = { version = "0.1.0", path = "./ritz_impl" }
 
 [dev-dependencies]
 maplit = "1.0.1"
+criterion = "0.2"
+
+[[bench]]
+name = "ritz_benchmark"
+harness = false
