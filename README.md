@@ -1,4 +1,6 @@
 # Ritz
+![Travis-CI Build][travis-ci]
+
 Ritz is a simple templating library that has [JSX][jsx-intro]-like syntax
 powered by [Snax](https://github.com/LPGhatguy/snax).
 
@@ -81,4 +83,5 @@ fn users() -> HtmlContent<'static> {
 Ritz is available under the MIT license. See [LICENSE.txt](LICENSE.txt) for
 details.
 
+[travis-ci]: https://api.travis-ci.org/LPGhatguy/ritz.svg?branch=master
 [jsx-intro]: https://reactjs.org/docs/introducing-jsx.html
