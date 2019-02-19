@@ -25,7 +25,7 @@ use snax::{
 };
 
 #[proc_macro_hack]
-pub fn snax(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn html(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let input = TokenStream::from(input);
 
     let parsed_content = snax::parse(input)
@@ -80,14 +80,14 @@ fn emit_self_closing_tag(tag: &SnaxSelfClosingTag) -> TokenStream {
     let tag_name_literal = Literal::string(&tag.name.to_string());
 
     quote!({
-        let mut __snax_tag = ::snax::HtmlSelfClosingTag {
+        let mut __snax_tag = ::ritz::HtmlSelfClosingTag {
             name: ::std::borrow::Cow::Borrowed(#tag_name_literal),
             attributes: ::std::collections::HashMap::with_capacity(#attributes_len_literal),
         };
 
         #attribute_insertions
 
-        ::snax::HtmlContent::SelfClosingTag(__snax_tag)
+        ::ritz::HtmlContent::SelfClosingTag(__snax_tag)
     })
 }
 
@@ -100,7 +100,7 @@ fn emit_tag(tag: &SnaxTag) -> TokenStream {
     let tag_name_literal = Literal::string(&tag.name.to_string());
 
     quote!({
-        let mut __snax_tag = ::snax::HtmlTag {
+        let mut __snax_tag = ::ritz::HtmlTag {
             name: ::std::borrow::Cow::Borrowed(#tag_name_literal),
             attributes: ::std::collections::HashMap::with_capacity(#attributes_len_literal),
             children: ::std::vec::Vec::with_capacity(#children_len_literal),
@@ -109,7 +109,7 @@ fn emit_tag(tag: &SnaxTag) -> TokenStream {
         #attribute_insertions
         #child_insertions
 
-        ::snax::HtmlContent::Tag(__snax_tag)
+        ::ritz::HtmlContent::Tag(__snax_tag)
     })
 }
 
@@ -119,18 +119,18 @@ fn emit_fragment(fragment: &SnaxFragment) -> TokenStream {
     let children_len_literal = Literal::usize_unsuffixed(fragment.children.len());
 
     quote!({
-        let mut __snax_tag = ::snax::Fragment {
+        let mut __snax_tag = ::ritz::Fragment {
             children: ::std::vec::Vec::with_capacity(#children_len_literal),
         };
 
         #child_insertions
 
-        ::snax::HtmlContent::Fragment(__snax_tag)
+        ::ritz::HtmlContent::Fragment(__snax_tag)
     })
 }
 
 fn emit_content(tt: &TokenTree) -> TokenStream {
     quote!(
-        ::snax::HtmlContent::from(#tt)
+        ::ritz::HtmlContent::from(#tt)
     )
 }

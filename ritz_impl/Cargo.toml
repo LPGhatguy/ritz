@@ -16,4 +16,4 @@ proc-macro = true
 proc-macro-hack = "0.5"
 proc-macro2 = "0.4"
 quote = "0.6.11"
-snax = { version = "0.1.0", git = "https://github.com/LPGhatguy/snax.git" }
+snax = { version = "0.2.0", git = "https://github.com/LPGhatguy/snax.git" }

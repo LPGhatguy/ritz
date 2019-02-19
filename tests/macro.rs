@@ -5,12 +5,12 @@ use std::{
 
 use maplit::hashmap;
 
-use snax::{
+use ritz::{
+    html,
     HtmlTag,
     HtmlSelfClosingTag,
     HtmlContent,
     Fragment,
-    snax,
 };
 
 fn compare<'a, 'b, A, B>(a: A, b: B)
@@ -27,7 +27,7 @@ fn compare<'a, 'b, A, B>(a: A, b: B)
 
 #[test]
 fn just_string() {
-    let tag = snax!("hi");
+    let tag = html!("hi");
 
     compare(tag, HtmlContent::from("hi"));
 }
@@ -35,7 +35,7 @@ fn just_string() {
 #[test]
 fn composing_via_function() {
     fn my_component(value: &str) -> HtmlContent {
-        snax!(
+        html!(
             <span class="hello">{ value }</span>
         )
     }
@@ -44,7 +44,7 @@ fn composing_via_function() {
     // my_component is NOT 'static.
     let cool_value = "hello".to_owned();
 
-    let tag = snax!(
+    let tag = html!(
         <div>
             { my_component(&cool_value) }
         </div>
@@ -69,7 +69,7 @@ fn composing_via_function() {
 
 #[test]
 fn empty() {
-    let tag = snax!(<div></div>);
+    let tag = html!(<div></div>);
 
     compare(tag, HtmlContent::Tag(HtmlTag {
         name: Cow::Borrowed("div"),
@@ -80,7 +80,7 @@ fn empty() {
 
 #[test]
 fn empty_comment() {
-    let tag = snax!(
+    let tag = html!(
         <div>
             /* Hello, world! */
         </div>
@@ -95,7 +95,7 @@ fn empty_comment() {
 
 #[test]
 fn self_closing() {
-    let tag = snax!(<div />);
+    let tag = html!(<div />);
 
     compare(tag, HtmlContent::SelfClosingTag(HtmlSelfClosingTag {
         name: Cow::Borrowed("div"),
@@ -105,7 +105,7 @@ fn self_closing() {
 
 #[test]
 fn empty_fragment() {
-    let fragment = snax!(<> </>);
+    let fragment = html!(<> </>);
 
     compare(fragment, HtmlContent::Fragment(Fragment {
         children: Vec::new(),
@@ -114,7 +114,7 @@ fn empty_fragment() {
 
 #[test]
 fn empty_with_attributes() {
-    let tag = snax!(<div foo="bar" baz="qux"></div>);
+    let tag = html!(<div foo="bar" baz="qux"></div>);
 
     compare(tag, HtmlContent::Tag(HtmlTag {
         name: Cow::Borrowed("div"),
@@ -128,7 +128,7 @@ fn empty_with_attributes() {
 
 #[test]
 fn empty_with_block_attribute() {
-    let tag = snax!(<div foo={ (5 + 5).to_string() }></div>);
+    let tag = html!(<div foo={ (5 + 5).to_string() }></div>);
 
     compare(tag, HtmlContent::Tag(HtmlTag {
         name: Cow::Borrowed("div"),
@@ -141,7 +141,7 @@ fn empty_with_block_attribute() {
 
 #[test]
 fn self_closing_with_attribute() {
-    let tag = snax!(<div foo="hello" />);
+    let tag = html!(<div foo="hello" />);
 
     compare(tag, HtmlContent::SelfClosingTag(HtmlSelfClosingTag {
         name: Cow::Borrowed("div"),
@@ -153,7 +153,7 @@ fn self_closing_with_attribute() {
 
 #[test]
 fn literal_string() {
-    let tag = snax!(
+    let tag = html!(
         <span>
             "Hello, world!"
         </span>
@@ -170,7 +170,7 @@ fn literal_string() {
 
 #[test]
 fn literal_string_fragment() {
-    let fragment = snax!(
+    let fragment = html!(
         <>
             "Hello!"
         </>
@@ -185,7 +185,7 @@ fn literal_string_fragment() {
 
 #[test]
 fn literal_multiple_string_fragment() {
-    let fragment = snax!(
+    let fragment = html!(
         <>
             "Hello, "
             "world!"
@@ -202,7 +202,7 @@ fn literal_multiple_string_fragment() {
 
 #[test]
 fn literal_block() {
-    let tag = snax!(
+    let tag = html!(
         <span>
             { (5 + 5).to_string() }
         </span>
@@ -219,7 +219,7 @@ fn literal_block() {
 
 #[test]
 fn literal_block_fragment() {
-    let tag = snax!(
+    let tag = html!(
         <span>
             { Fragment::new(["hello", "world"].iter()) }
         </span>
@@ -239,7 +239,7 @@ fn literal_block_fragment() {
 //
 // #[test]
 // fn literal_block_iterator() {
-//     let tag = snax!(
+//     let tag = html!(
 //         <span>
 //             { ["hello", "world"].iter() }
 //         </span>
@@ -259,7 +259,7 @@ fn literal_block_fragment() {
 //
 // #[test]
 // fn literal_block_into_iterator() {
-//     let tag = snax!(
+//     let tag = html!(
 //         <span>
 //             { ["hello", "world"] }
 //         </span>
@@ -278,12 +278,12 @@ fn literal_block_fragment() {
 #[test]
 fn literal_block_content_fragments() {
     fn render_age(age: &u32) -> HtmlContent {
-        snax!(
+        html!(
             <span>{ age.to_string() }</span>
         )
     }
 
-    let tag = snax!(
+    let tag = html!(
         <div>
             { Fragment::new([32, 2, 114].iter().map(render_age)) }
         </div>
@@ -320,7 +320,7 @@ fn literal_block_content_fragments() {
 
 #[test]
 fn nested_tags() {
-    let tag = snax!(
+    let tag = html!(
         <div>
             <span>
             </span>
@@ -342,7 +342,7 @@ fn nested_tags() {
 
 #[test]
 fn adjacent_tags() {
-    let tag = snax!(
+    let tag = html!(
         <div>
             <span></span>
             <div></div>
@@ -369,7 +369,7 @@ fn adjacent_tags() {
 
 #[test]
 fn nested_tags_self_closing() {
-    let tag = snax!(
+    let tag = html!(
         <div>
             <span />
         </div>
@@ -391,7 +391,7 @@ fn nested_tags_self_closing() {
 fn borrow_content_nonstatic() {
     let foo = "hello".to_string();
 
-    let tag = snax!(
+    let tag = html!(
         <span>
             { foo.as_str() }
         </span>
@@ -410,7 +410,7 @@ fn borrow_content_nonstatic() {
 fn borrow_attribute_nonstatic() {
     let foo = "world".to_string();
 
-    let tag = snax!(
+    let tag = html!(
         <span hello={ foo.as_str() } />
     );
 

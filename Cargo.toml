@@ -19,3 +19,6 @@ proc-macro-nested = "0.1.2"
 proc-macro-hack = "0.5.4"
 htmlescape = "0.3.1"
 ritz_impl = { version = "0.1.0", path = "./ritz_impl" }
+
+[dev-dependencies]
+maplit = "1.0.1"

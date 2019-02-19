@@ -87,5 +87,5 @@ mod types;
 use proc_macro_hack::proc_macro_hack;
 
 #[proc_macro_hack(support_nested)]
-pub use ritz_impl::snax;
+pub use ritz_impl::html;
 pub use types::*;
