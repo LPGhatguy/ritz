@@ -1,0 +1,19 @@
+[package]
+name = "ritz_impl"
+description = "Proc macro implementation for the `ritz` crate"
+version = "0.1.0"
+authors = ["Lucien Greathouse <me@lpghatguy.com>"]
+edition = "2018"
+license = "MIT"
+documentation = "https://docs.rs/ritz_impl"
+homepage = "https://github.com/LPGhatguy/ritz"
+repository = "https://github.com/LPGhatguy/ritz.git"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+proc-macro-hack = "0.5"
+proc-macro2 = "0.4"
+quote = "0.6.11"
+snax = { version = "0.1.0", git = "https://github.com/LPGhatguy/snax.git" }

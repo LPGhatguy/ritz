@@ -1,0 +1,21 @@
+[package]
+name = "ritz"
+description = "Virtual HTML DOM library for Rust with JSX-like syntax powered by Snax"
+version = "0.1.0"
+authors = ["Lucien Greathouse <me@lpghatguy.com>"]
+edition = "2018"
+license = "MIT"
+documentation = "https://docs.rs/ritz"
+homepage = "https://github.com/LPGhatguy/ritz"
+repository = "https://github.com/LPGhatguy/ritz.git"
+
+[workspace]
+members = [
+	"ritz_impl",
+]
+
+[dependencies]
+proc-macro-nested = "0.1.2"
+proc-macro-hack = "0.5.4"
+htmlescape = "0.3.1"
+ritz_impl = { version = "0.1.0", path = "./ritz_impl" }
